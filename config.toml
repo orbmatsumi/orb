@@ -1,5 +1,5 @@
-baseURL = "https://bloglife-jp.blog-dai.com/"
-title = "ORB - 音楽ダイニング 松見坂"
+baseURL = "https://orb-music.netlify.app/"
+title = "ORB - 音楽ダイニング 神泉"
 theme = "bloglife-pro"
 hasCJKLanguage = true
 summaryLength = 150

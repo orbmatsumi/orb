@@ -1,6 +1,6 @@
 <a href="{{ .Destination | safeURL }}" 
   {{- with .Title}} title="{{ . }}"{{ end }} 
-  {{- if strings.HasPrefix .Destination "http" }} target="_blank" rel="noopener">{{- .Text }} 🗗
+  {{- if strings.HasPrefix .Destination "http" }} target="_blank" rel="noopener">{{- .Text }} <img src="/images/new-window.png" class="new-window"/>
   {{- else -}}>{{- .Text -}}{{- end -}}
 </a>
 

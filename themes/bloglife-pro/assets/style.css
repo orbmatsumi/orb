@@ -1311,6 +1311,12 @@ footer .copyright {
   }
 }
 
+
+img.new-window{
+  border: none;
+  box-shadow: none;
+}
+
 @keyframes show {
   from {
     opacity: 0.3;

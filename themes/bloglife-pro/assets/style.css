@@ -895,7 +895,7 @@ aside {
 
 .sidebar .profile2 li {
   /**border-top: 1px dashed #dddddd;**/
-  padding: 3px 0px 0px 5px;
+  padding: 3px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
   line-height: 200%;
 }

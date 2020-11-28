@@ -1,0 +1,17 @@
+        <div class="list-default-frame">
+          {{ partial "article-date" .pageinfo }}
+          <h2><a href="{{ .pageinfo.RelPermalink }}">{{ .pageinfo.Title }}</a></h2>
+          {{ partial "article-info" .pageinfo }}
+          <hr class="thin">
+          {{ partial "eyecatch-img" (dict "pageinfo" .pageinfo "needsanchor" true "size" "750x320 q80 center" "ext" .ext "mode" "list")}}
+          <div class="summary">
+            {{ if .pageinfo.Description }}
+              {{ .pageinfo.Description }}
+            {{ else }}
+              {{ .pageinfo.Summary }}
+            {{ end }}
+          </div>
+          <div class="readmore">
+            <a href="{{ .pageinfo.RelPermalink }}">READ MORE</a>
+          </div>
+        </div>

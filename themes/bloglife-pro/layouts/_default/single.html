@@ -1,0 +1,22 @@
+{{ define "main" }}
+      <main>
+        <div class="main-inner">
+          {{ partial "breadcrumb" . }}
+          <article>
+            {{ partial "article-date" . }}
+            <h1>{{ .Title }}</h1>
+            {{ partial "article-info" . }}
+            {{$ext := $.Scratch.Get "ext" }}
+            <hr class="thin">
+            {{ partial "eyecatch-img" (dict "pageinfo" . "needsanchor" false "ext" $ext "mode" "content")}}
+            {{ .Content }}
+            {{ partial "share" . }}
+            {{ partial "disqus" (dict "pageinfo" . "ext" $ext)}}
+          </article>
+          {{ partial "related" . }}
+        </div>
+      </main>
+      <aside>
+        {{partial "sidebar" . }}
+      </aside>
+{{ end }}

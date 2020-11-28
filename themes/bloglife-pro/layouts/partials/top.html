@@ -1,0 +1,7 @@
+{{- if and .Site.Params.UseHeader .Site.Params.NavUnderHeader}}
+  {{- partial "header" . }}
+{{- end }}
+{{- partial "nav" . }}
+{{- if and .Site.Params.UseHeader (not .Site.Params.NavUnderHeader)}}
+  {{- partial "header" . }}
+{{- end }}

@@ -1,0 +1,73 @@
+baseURL = "https://bloglife-jp.blog-dai.com/"
+title = "ORB - 音楽ダイニング 松見坂"
+theme = "bloglife-pro"
+hasCJKLanguage = true
+summaryLength = 150
+enableGitInfo = false
+enableEmoji = true
+relativeurls = true
+pluralizeListTitles = false
+disqusShortname = "https-blog-dai-com"
+
+[params]
+author = "Your Name"
+navTitle = "Home"
+googleAnalytics = "UA-XXXXXXXXX-X"
+dateformat = "Jan 2, 2006"
+listType = "default" # default / tile / icon
+customCSS = []
+useDisqus = false
+useFontAwesomeCss = false
+useHeader = true
+useHeaderLogo = true
+useFrontFace = false
+navUnderHeader = true
+useShareButton = true
+dispShareButtonFacebook = true
+dispShareButtonTwitter = true
+dispShareButtonHatebu = true
+dispShareButtonGetpocket = true
+dispShareButtonFeedly = true
+noindexForSection = true
+noindexForArchive = true
+noindexForTag = true
+
+[markup]
+
+[markup.goldmark]
+
+[markup.goldmark.renderer]
+unsafe = true
+xHTML = true
+
+[markup.highlight]
+lineNos = true
+style = "friendly"
+
+[markup.tableOfContents]
+endLevel = 4
+startLevel = 2
+
+[outputs]
+page = ["HTML", "AMP"]
+
+[outputFormats]
+
+[outputFormats.SearchIndex]
+mediaType = "application/json"
+baseName = "index"
+isPlainText = true
+notAlternative = true
+
+[taxonomies]
+tag = "tags"
+sitemap = "sitemap"
+contact = "contact"
+archives = "archives"
+
+[[menu.main]]
+name = "Sitemap"
+url = "/sitemap/"
+identifier = "sitemap"
+weight = 6
+

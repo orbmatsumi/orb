@@ -1,0 +1,20 @@
+
+          <ol class="breadcrumb">
+            {{- template "breadcrumb_nav" (dict "node" . "start" .) -}}
+          </ol>
+
+          {{- define "breadcrumb_nav" }}
+            {{- if .node.Parent }}
+              {{- template "breadcrumb_nav" (dict "node" .node.Parent "start" .start) }}
+            {{- else if not .node.IsHome }}
+              {{- template "breadcrumb_nav" (dict "node" .node.Site.Home "start" .start) }}
+            {{- end }}
+
+            {{- if eq .node .start -}}
+              <li>{{- .node.LinkTitle -}}</li>
+            {{- else if .node.IsHome -}}
+              <li><a href="{{- .node.Permalink -}}">Home</a></li>
+            {{- else -}}
+              <li><a href="{{- .node.Permalink -}}">{{- .node.LinkTitle -}}</a></li>
+            {{- end -}}
+          {{ end }}

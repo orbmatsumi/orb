@@ -1,0 +1,36 @@
+{{ define "main" }}
+  <main>
+    <div class="main-inner">
+      {{ if .IsHome }}
+        {{ if .Site.Params.UseFrontFace }}
+          <section class="front-face">
+          {{ partial "front-face" . }}
+          </section>
+        {{ end }}
+      {{ else }}
+        {{ partial "breadcrumb" . }}
+      {{ end }}
+
+      {{ $applyListType := "list-default" }}
+      {{ if eq .Site.Params.ListType "tile" }}
+        {{ $applyListType = "list-tile" }}
+      {{ else if eq .Site.Params.ListType "icon" }}
+        {{ $applyListType = "list-icon" }}
+      {{ end }}
+
+      <section class="{{ $applyListType }}">
+        {{- range $pageinfo := .Paginator.Pages }}
+          {{$ext := $.Scratch.Get "ext" }}
+          {{ partial $applyListType (dict "pageinfo" $pageinfo "ext" $ext)}}
+        {{- end }}
+      </section>
+
+      <div class="paging">
+        {{ template "_internal/pagination.html" . }}
+      </div>
+    </div>
+  </main>
+  <aside>
+    {{partial "sidebar" . }}
+  </aside>
+{{ end }}

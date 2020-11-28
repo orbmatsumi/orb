@@ -1,0 +1,42 @@
+{{-  $imageParam := .pageinfo.Param "image" -}}
+{{-  $resources := .pageinfo.Resources  -}}
+
+{{-  $imgobj := "" -}}
+{{- if $imageParam -}}
+  {{-  if $resources.GetMatch $imageParam  -}}
+    {{-  $imgobj = $resources.GetMatch $imageParam -}}
+  {{-  end  -}}
+{{-  else  -}}
+  {{-  if $resources.GetMatch "**.jpg" -}}
+    {{-  $imgobj = $resources.GetMatch "**.jpg" -}}
+  {{-  else if $resources.GetMatch "**.webp"  -}}
+    {{-  $imgobj = $resources.GetMatch "**.webp" -}}
+  {{-  else if $resources.GetMatch "**.png"  -}}
+    {{-  $imgobj = $resources.GetMatch "**.png" -}}
+  {{-  else if $resources.GetMatch "**.gif"  -}}
+    {{-  $imgobj = $resources.GetMatch "**.gif" -}}
+  {{-  end  -}}
+{{-  end  -}}
+{{-  $imgurl := ""  -}}
+{{-  $adjustImg := $imgobj  -}}
+{{- if $imgobj -}}
+  {{- if .size -}}
+    {{-  $adjustImg = $imgobj.Fill .size -}}
+    {{-  $imgurl = $adjustImg.RelPermalink  -}}
+  {{- else -}}
+    {{-  $imgurl = $adjustImg.RelPermalink  -}}
+  {{- end -}}
+{{- end -}}
+{{- if not (and (.pageinfo.Param "disuseSingleEyecatch") (eq .mode "content")) -}}
+  {{- if $imgurl -}}
+    <div class="eyecatch">
+      {{-  if eq .needsanchor false -}}
+        {{-  partial "img" (dict "src" $imgurl "ext" .ext "alt" .pageinfo.Title "width" $adjustImg.Width "height" $adjustImg.Height)  -}}
+      {{-  else  -}}
+        <a href="{{-  .pageinfo.RelPermalink  -}}">
+          {{-  partial "img" (dict "src" $imgurl "ext" .ext "alt" .pageinfo.Title "width" $adjustImg.Width "height" $adjustImg.Height)  -}}
+        </a>
+      {{- end -}}
+    </div>
+  {{- end -}}
+{{- end -}}

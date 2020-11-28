@@ -1,0 +1,5 @@
+              <div class="article-info-tiny">
+                📅 {{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006")}}
+                ｜ 
+                📂 <a href="{{.Parent.Permalink}}/">{{ .Parent.LinkTitle }}</a>
+              </div>

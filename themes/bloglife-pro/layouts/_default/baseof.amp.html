@@ -1,0 +1,18 @@
+<!doctype html>
+<html amp lang="ja">{{ .Scratch.Set "ext" "amp" }}
+  <head>
+    {{ partial "meta" . }}
+  </head>
+  <body>
+    {{ partial "amp-analytics" . }}
+    {{ partial "top" . }}
+    <div class="wrap">
+      {{ block "main" . }}
+      {{ end }}
+    </div>
+    <div id="page_top"><a href="#"></a></div>
+    <footer>
+      {{partial "footer" . }}
+    </footer>
+  </body>
+</html>

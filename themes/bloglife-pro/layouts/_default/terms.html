@@ -1,0 +1,26 @@
+{{ define "main" }}
+  <main>
+    <div class="main-inner">
+        <section class="list-default">
+          <div class="list-default-frame">
+            {{ if eq .Data.Plural "sitemap"}}
+              {{ partial "sitemap" . }}
+            {{ else if eq .Data.Plural "contact"}}
+              {{ partial "contact" . }}
+            {{ else if eq .Data.Plural "tags"}}
+              <ul>
+                {{- $plural := .Data.Plural }}
+                {{- range $index, $term := .Data.Terms.Alphabetical }}
+                <li><a href="{{ $.Site.LanguagePrefix }}/{{ $plural }}/{{ $term.Name | urlize }}">{{ $term.Name }}</a>
+                  ({{ $term.Count }})
+                  {{- end }}
+              </ul>
+            {{ end }}
+          </div>
+        </section>
+    </div>
+  </main>
+  <aside>
+    {{partial "sidebar" . }}
+  </aside>
+{{ end }}

@@ -1,0 +1,40 @@
+
+{{- $value := "" }} 
+{{- if .Get "value" }}
+  {{- $value = .Get "value" | htmlUnescape}}
+{{- else if .Inner}}
+  {{- $value = (trim .Inner "\n") | safeHTML}}
+{{- else }}
+  {{- $value = .Get 0 | htmlUnescape}}
+{{- end }}
+
+{{- $src := .Get `src` }}
+
+{{- $position := .Get "position" | default "left" }}
+
+<!-- type: say think none -->
+{{ $type := "say" }}
+{{- if .Get "type" }}
+  {{- $type = .Get "type" }}
+{{- end }}
+<div class="balloon-{{ $position }}">
+  {{ if $src }}
+  <div class="face-{{ $type }}-{{ $position }}">
+
+    {{ $useAmp := "html" }}
+    {{ range $outputFormat := .Page.OutputFormats}}
+      {{ if eq $outputFormat.Name "AMP" }}
+        {{ $useAmp = "amp" }}
+      {{ end }}
+    {{ end }}
+    
+    {{ partial "img" (dict "src" $src "ext" $useAmp "alt" "baloon" "width" "72px" "height" "72px") }}
+  </div>
+  {{ end }}
+  <div>
+    <div class="balloon-{{$type}}-{{ $position }}">
+      {{ $value }}
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,7 @@
+{{- if eq .ext "html" -}}
+  <img src="{{ .src }}" alt="{{ .alt }}" title="{{ .alt }}" />
+{{- end -}}
+
+{{- if eq .ext "amp" -}}
+  <amp-img src="{{ .src }}" alt="{{ .alt }}" title="{{ .alt }}" width="{{ .width }}" height="{{ .height }}" layout="intrinsic" />
+{{- end -}}

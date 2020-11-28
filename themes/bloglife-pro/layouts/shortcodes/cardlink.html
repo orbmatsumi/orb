@@ -1,0 +1,27 @@
+{{ $href := .Get "href"}}
+{{ $target := .Get "target"  | default "_self" }}
+{{ with $page := .Site.GetPage $href }}
+  <div class="cardlink">
+    <a href="{{$page.RelPermalink}}" target="{{ $target }}">
+      <div class="cardlink-inner">
+
+        {{ $useAmp := "html" }}
+        {{ range $outputFormat := .Page.OutputFormats}}
+          {{ if eq $outputFormat.Name "AMP" }}
+            {{ $useAmp = "amp" }}
+          {{ end }}
+        {{ end }}
+
+        {{ partial "eyecatch-img" (dict "pageinfo" $page "size" "160x120 q80 center" "needsanchor" false "ext" $useAmp "mode" "cardlink")}}
+        <div class="cardlink-text">
+          <p class="title">
+              {{ $page.Title }}</p>
+          </p>
+          {{ if $page.Params.Description }}
+          <p class="description">{{ $page.Params.Description }}</p>
+          {{ end }}
+        </div>
+      </div>
+    </a>
+  </div>
+{{ end }}

@@ -1,0 +1,19 @@
+variables:
+  HOST: "sv3010.xserver.jp"
+  USERNAME: "becchy"
+  PASSWORD: "07fjb53r"
+  LOCAL: "public"
+  SERVER: "/blog-dai.com/public_html/bloglife-jp"
+deploy:
+  script:
+    - apt-get update -y
+    - apt-get install -y lftp
+    - wget https://github.com/gohugoio/hugo/releases/download/v0.69.2/hugo_0.69.2_Linux-64bit.deb
+    - apt install ./hugo_0.69.2_Linux-64bit.deb
+    - hugo version
+    - hugo
+    - lftp -c "set file:charset utf8; open -u $USERNAME,$PASSWORD $HOST; mirror -R $LOCAL $SERVER --parallel=10"
+    - ls -l
+    - ls -lR public
+  only:
+    - master

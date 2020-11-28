@@ -1,0 +1,118 @@
+{{ $ext := $.Scratch.Get "ext" }}
+{{ $useAmp := false }}
+{{ range $outputFormat := .Page.OutputFormats}}
+  {{ if eq $outputFormat.Name "AMP" }}
+    {{ $useAmp = true }}
+  {{ end }}
+{{ end }}
+<meta charset="utf-8">
+{{ if $useAmp }}
+<script async src="https://cdn.ampproject.org/v0.js"></script>
+{{ end }}
+<title>{{if not .IsHome}}{{ .Title }} | {{end}}{{ .Site.Title }}</title>
+<meta name="description" content="{{ $.Param "description" }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{ range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" title="{{ .Name }}" href="{{ .Permalink | safeURL }}">
+{{ end }}
+<meta name="created" content="{{ .Date.Format "2006-01-02T15:04:05-0700" }}">
+<meta name="modified" content="{{ .Lastmod.Format "2006-01-02T15:04:05-0700" }}">
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-0700" }}">
+{{ if $.Param "author" }}
+<meta name="author" content="{{ $.Param "author" }}">
+<meta property="article:author" content="{{ .Permalink | absLangURL }}@{{ $.Param "author" }}">
+{{ else if .Site.Params.myname }}
+<meta name="author" content="{{ .Site.Params.myname }}">
+{{ end }}
+{{ with $.Param "contact" }}
+<meta name="contact" content="{{ . }}">{{ end }}
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:url" content="{{ .Permalink | absLangURL }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:description" content="{{ $.Param "description" }}">
+{{ if .Params.meta_image }}
+{{ with .Params.meta_image }}
+<meta property="og:image" content="{{ . | absURL }}">
+<meta property="og:image:url" content="{{ . | absURL }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:app:name:iphone" content="{{ $.Site.Title }}">
+<meta property="twitter:title" content="{{ $.Param "title" }}">
+<meta property="twitter:description" content="{{ $.Param "description" }}">
+{{ end }}
+{{ else if .Params.image }}
+{{ with .Params.image }}
+<meta property="og:image" content="{{ . | absURL }}">
+<meta property="og:image:url" content="{{ . | absURL }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:app:name:iphone" content="{{ $.Site.Title }}">
+<meta property="twitter:title" content="{{ $.Param "title" }}">
+<meta property="twitter:description" content="{{ $.Param "description" }}">
+{{ end }}
+{{ else if $.Param "meta_image" }}
+{{ with $.Param "meta_image" }}
+<meta property="og:image" content="{{ . | absURL }}">
+<meta property="og:image:url" content="{{ . | absURL }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:app:name:iphone" content="{{ $.Site.Title }}">
+<meta property="twitter:title" content="{{ $.Param "title" }}">
+<meta property="twitter:description" content="{{ $.Param "description" }}">
+{{ end }}
+{{ end }}
+{{ hugo.Generator }}
+<meta name="msapplication-TileColor" content="#fff">
+<!-- Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#fff">
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#fff">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="#fff">
+{{ if eq $ext "html" }}
+    {{ $style := resources.Get "style.css" | minify }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    {{ $js := resources.Get "bloglife.js" | minify }}
+    <script src="{{ $js.Permalink }}"></script>
+    {{ range .Site.Params.CustomCSS }}
+    <link rel="stylesheet" href="{{ . | relURL }}">
+    {{ end }}
+{{ end }}
+{{ if eq $ext "amp" }}
+    <style amp-custom>
+    {{ (resources.Get "style.css" | minify ).Content | safeCSS }}
+    </style>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+{{ end }}
+<link rel="icon" href="/images/favicon.ico">
+{{ if .Site.Params.useFontAwesomeCss }}
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+{{ end }}
+
+{{ $noindex := false }}
+{{ if eq .Page.Params.Noindex true}}
+  {{ $noindex = true}}
+{{ else if and (eq .Site.Params.NoindexForSection true) (.IsSection) }}
+  {{ $noindex = true}}
+{{ else if and (eq .Site.Params.NoindexForArchive true) (eq .Data.Plural "archives") }}
+  {{ $noindex = true}}
+{{ else if and (eq .Site.Params.NoindexForTags true) (eq .Data.Plural "tags") }}
+  {{ $noindex = true}}
+{{ else if eq .Kind "404"}}
+  {{ $noindex = true}}
+{{ end }}
+{{ if $noindex}}
+<meta name="robots" content="noindex">
+{{ end }}
+{{- if .Site.Params.googleAnalytics }}
+  {{- if eq $ext "html" }}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.GoogleAnalytics }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', '{{ .Site.Params.GoogleAnalytics }}');
+    </script>
+  {{- else if eq $ext "amp" }}
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  {{- end }}
+{{- end }}

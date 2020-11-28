@@ -1,0 +1,15 @@
+{{ $imageSrc := print (.Destination | safeURL)}}
+{{ $image := .Page.Resources.GetMatch $imageSrc }}
+
+{{ $useAmp := false }}
+{{range $outputFormat := .Page.OutputFormats}}
+  {{ if eq $outputFormat.Name "AMP" }}
+    {{ $useAmp = true }}
+  {{ end }}
+{{end}}
+
+{{ if and $useAmp $image}}
+  <amp-img src="{{ $imageSrc }}" alt="{{ .Text }}" title="{{ .Text }}" width="{{ $image.Width }}" height="{{ $image.Height }}" layout="intrinsic" />
+{{ else }}
+  <img src="{{ $imageSrc }}" alt="{{ .Text }}" title="{{ .Text }}" />
+{{ end }}

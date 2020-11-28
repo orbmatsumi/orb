@@ -1,0 +1,6 @@
+            {{ if eq .ext "html" }}
+              {{ if .Site.Params.useDisqus }}
+                <hr class="share-bottom" />
+                {{ template "_internal/disqus.html" . }}
+              {{ end }}
+            {{ end }}

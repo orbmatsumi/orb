@@ -1,0 +1,15 @@
+{{ define "main" }}
+        <div class="one-column">
+          <div class="main-inner">
+            <article>
+              {{ partial "article-date" . }}
+              <h1>{{ .Title }}</h1>
+              {{ partial "article-info" . }}
+              {{$ext := $.Scratch.Get "ext" }}
+              {{ partial "eyecatch-img" (dict "pageinfo" . "needsanchor" true "ext" $ext "mode" "content")}}
+              {{ .Content }}
+            </article>
+          </div>
+        </div>
+{{ end }}
+

@@ -1,0 +1,16 @@
+        <div class="list-tile-frame">
+          <div class="list-tile-frame-inner">
+            {{ partial "eyecatch-img" (dict "pageinfo" .pageinfo "needsanchor" true "size" "600x250 q80 center" "ext" .ext "mode" "list")}}
+            <div class="list-tile-text">
+              <h2><a href="{{ .pageinfo.RelPermalink }}">{{ .pageinfo.Title }}</a></h2>
+              {{ partial "article-info-tiny" .pageinfo }}
+              <div class="summary">
+                {{ if .pageinfo.Description }}
+                {{ substr .pageinfo.Description 0 45}} ...
+                {{ else }}
+                {{ substr .pageinfo.Summary 0 45}} ...
+                {{ end }}
+              </div>
+            </div>
+          </div>
+        </div>

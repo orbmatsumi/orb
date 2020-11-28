@@ -1,0 +1,59 @@
+      {{$ext := $.Scratch.Get "ext" }}
+        <div class="sidebar">
+          
+          <div class="profile2">
+            <img src="/images/profile.png" />
+            <div class="profile2-inner">
+              <ul>
+              <li>【ホームページ】<a href="https://tabelog.com/tokyo/A1318/A131801/13118634/dtlrvwlst/" target="_blank">ORB（オーブ） - 食べログ</a></li>
+              <li><a href="https://www.youtube.com/channel/UC2tJTRynLlP5ke7GwWsUzYw"><img src="/images/youtube.png" /> 音楽ダイニングORB 神泉 - Youtube</a></li>
+              <li>東京都目黒区大橋2-1-1 ランドステージ松見坂 B1F</li>
+              </ul>
+            </div>        
+          </div>
+          <section class="latest-post">
+            <div class="section-title">LATEST ARTICLES</div>
+            <ul>
+              {{ range $pageinfo := first 5 .Site.RegularPages.ByDate.Reverse }}
+              <li>
+                {{ partial "eyecatch-img" (dict "pageinfo" $pageinfo "size" "80x60 q80 center" "ext" $ext "mode" "sidebar")}}
+                <div class="li-inner">
+                  <div>
+                    <a href="{{ $pageinfo.RelPermalink }}">
+                    {{ $pageinfo.Title }}
+                    </a>
+                  </div>
+                  <div class="time">
+                    📅 {{ .Date.Format  ( .Site.Params.dateformat | default "Jan 2, 2006")}}
+                    {{ if ne .Date .Lastmod }}（📝 {{ .Lastmod.Format  ( .Site.Params.dateformat | default "Jan 2, 2006") }}）{{ end }}
+                  </div>
+                </div>
+              </li>
+              {{ end }}
+            </ul>
+          </section>
+          <section class="category">
+            <div class="section-title">CATEGORY</div>
+            <div class="category-hierarchy">
+              {{- define "hierarchy" }}
+              <ul>
+                {{- range .Sections }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                {{- if gt (len .Sections) 0}}
+                  {{ template "hierarchy" . }}
+                {{- end }}
+                </li>
+                {{- end }}
+              </ul>
+              {{- end }}
+              {{ template "hierarchy" .Site.Home }}
+            </div>
+          </section>
+
+          {{ if .IsPage }}
+          <section class="toc">
+            <div class="section-title">TOC</div>
+            {{.TableOfContents }}
+          </section>
+          {{end}}
+        </div>

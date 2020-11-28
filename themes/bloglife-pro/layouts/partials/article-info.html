@@ -1,0 +1,12 @@
+          <div class="article-info">
+            ☕ Reading Time：{{ .ReadingTime }} min.
+            {{ with .Params.tags }}
+            ｜
+            🔖
+            {{- range . -}}
+            &nbsp;<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>
+            {{- end -}}
+            {{ end }}
+            ｜
+            📂 <a href="{{.Parent.Permalink}}/">{{ .Parent.LinkTitle }}</a>
+          </div>

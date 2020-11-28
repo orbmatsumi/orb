@@ -1,0 +1,4 @@
+          <div class="article-date">
+            📅 {{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006")}}
+            {{ if ne .Date .Lastmod }}（📝 Updated：{{ .Lastmod.Format ( .Site.Params.dateformat | default "Jan 2, 2006") }}）{{ end }}
+          </div>

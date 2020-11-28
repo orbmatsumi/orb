@@ -1,0 +1,7 @@
+SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
+SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.blog-dai\.com
+RewriteRule (.*) https://blog-dai.com/$1 [R=301,L]
+ErrorDocument 404 /404.html
+RewriteRule ^programming/yaml-html-preview/?$ https://blog-dai.com/yaml-html-preview/ [R=301,L]

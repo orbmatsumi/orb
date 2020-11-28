@@ -1,0 +1,45 @@
+{{- $page_link := .Permalink -}}
+{{- $tags := .Params.tags -}}
+{{- $related_pages:= slice -}}
+
+{{- range $page := .Site.RegularPages -}}
+
+  {{- if ne $page_link $page.Permalink -}}
+    {{- $has_common_tags := intersect $tags .Params.tags | len | lt 0 -}}
+    {{- if $has_common_tags -}}
+      {{- $related_pages = $related_pages | append $page -}}
+    {{- else if eq .Section $page.Section -}}
+      {{- $related_pages = $related_pages | append $page -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $related_pages_shuffled := (shuffle $related_pages) | first 5 -}}
+
+{{- with $related_pages_shuffled -}}
+
+<div class="related-post">
+  <b>RELATED</b>
+  <ul>
+    {{- range $pageinfo := $related_pages_shuffled -}}
+
+    <li>
+      {{- $ext := $.Scratch.Get "ext" -}}
+      {{- partial "eyecatch-img" (dict "pageinfo" $pageinfo "size" "120x90 q80 center" "ext" $ext "mode" "related-post") -}}
+      <div class="li-inner">
+        <div>
+          <a href="{{- $pageinfo.RelPermalink -}}">
+            {{- $pageinfo.Title -}}
+          </a>
+        </div>
+        <div class="time">
+          📅 {{- .Date.Format  ( .Site.Params.dateformat | default "Jan 2, 2006") -}}
+          {{- if ne .Date .Lastmod -}}（📝 {{- .Lastmod.Format  ( .Site.Params.dateformat | default "Jan 2, 2006") -}}）{{- end -}}
+        </div>
+      </div>
+    </li>
+
+    {{- end -}}
+  </ul>
+</div>
+{{- end -}}

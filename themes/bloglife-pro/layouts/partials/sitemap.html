@@ -1,0 +1,17 @@
+
+<h2>サイトマップ</h2>
+<div class="sitemap">
+{{ template "hierarchy_sitemap" .Site.Home }}
+</div>
+
+{{- define "hierarchy_sitemap" }}
+            <ul>
+                {{- range .Sections }}
+                <li>📂 <a href="{{ .RelPermalink }}"> {{ .Title }}</a>
+                {{- template "hierarchy_sitemap" . }}
+                {{- end }}
+                {{- range .RegularPages }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                {{- end }}
+            </ul>
+{{- end }}

@@ -1,0 +1,62 @@
+<nav id="top">
+    <div class="nav-inner">
+        <div class="nav-title">
+            {{- if or .Site.Params.UseTopBand (not .IsHome) }}
+            <a href="{{- .Site.BaseURL | absURL }}">{{ .Site.Params.NavTitle }}</a>
+            {{- else }}
+            <h1><a href="{{- .Site.BaseURL | absURL }}">{{ .Site.Params.NavTitle }}</a></h1>
+            {{- end }}
+        </div>
+        <div class="nav-pc">
+            <ul class="nav-pc-parent">
+                {{ range .Site.Menus.main }}
+                <li class="nav-pc-parent-item">
+                    {{ if .HasChildren }}
+                    <a href="#">
+                        {{ .Name }}
+                        <span class="nav-pc-child-arrow">▼</span>
+                    </a>
+                    <ul class="nav-pc-child-content">
+                        {{ range .Children }}
+                        <li class="nav-pc-child-item">
+                            <a href="{{ .URL }}">{{ .Name }}</a>
+                        </li>
+                        {{ end }}
+                    </ul>
+                    {{ else }}
+                    <a href="{{ .URL }}">{{ .Name }}</a>
+                    {{ end  }}
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+        <div class="nav-mobile">
+            <input id="nav-input" type="checkbox" class="nav-unshown" value="">
+            <label id="nav-open" for="nav-input"><span></span></label>
+            <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+            <div id="nav-content">
+                <ul class="nav-mobile-parent">
+                    {{ range .Site.Menus.main }}
+                    <li class="nav-mobile-parent-item">
+                        {{ if .HasChildren }}
+                        <a href="#">
+                            {{ .Name }}
+                            <span class="nav-mobile-child-arrow">＞</span>
+                        </a>
+                        <ul class="nav-mobile-child-content">
+                            {{ range .Children }}
+                            <li class="nav-mobile-child-item">
+                                <a href="{{ .URL }}">{{ .Name }}</a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        {{ else }}
+                        <a href="{{ .URL }}">{{ .Name }}</a>
+                        {{ end  }}
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

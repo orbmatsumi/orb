@@ -1,6 +1,6 @@
 ---
 title: 最速で伴奏するためのベース初心者講座
-date: 2020-12-03
+date: 2020-12-05
 disuseSingleEyecatch: True
 ---
 
